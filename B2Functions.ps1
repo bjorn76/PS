@@ -13,6 +13,21 @@ Function Get-NeglectedFiles
 
 }
 
+Function Get-fileSizeByCreationDate
+
+{
+
+ Param([string[]]$path, [int]$numberDays)
+
+ #$StartDate = (Get-Date).AddDays(-$numberDays)
+  $StartDate = (Get-Date).AddDays(-$numberDays)
+  $EndDate = (Get-Date)
+
+
+ Get-ChildItem -Path $path |  Where-Object {($_.CreationTime -le $EndDate) -and ($_.CreationTime -gt $StartDate) }
+
+}
+
 
 
 function Get-NewPix
