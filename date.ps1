@@ -1,41 +1,75 @@
 ﻿
 cls
-Write-Output "The basic:" -
 # Creaates a date object with current date and time
-$today = get-date
-Write-Output "$today"
+write-host -ForegroundColor Cyan "DateTime in Power Shell"
+write-host -ForegroundColor Cyan "========================"
+$today = get-date # is like now
+$today2 = [System.DateTime]::Now
+$today3 = [System.DateTime]::Today
+write-host -ForegroundColor Cyan "Now and Today in default format: "
 
+write-host "$today"
+write-host "$today2"
+write-host "$today3"
 
-Write-Output "Fixed dates:"
+write-host ""
+
 
 #Creates a fixed date time
-$adate = get-date -Year 2018 -Month 1 -Day 1 -hour 0 -Minute 0 -Second 0
+write-host -ForegroundColor Cyan "Fixed dates:"
+$adate = get-date -Year 2001 -Month 1 -Day 1 -hour 0 -Minute 0 -Second 0
+$adate2 = New-Object DateTime (2002,2,2)
+$adate3 = [DateTime]::new(2003,3,3)
 
-#Creates a fixed date time
-$lastDay_int = [DateTime]::DaysInMonth($today.Year, $today.Month)  # DaysInMonth is a static member
-$LastDayThisMonth = [DateTime]::new(2018,1,1)
-$LastDayThisMonth
+get-date $adate -Format yyyy-MM-dd
+write-host "$adate2"
+write-host $adate3
+$adate3
+
+write-host ""
+
+
+#Static members
+write-host -ForegroundColor Cyan "Static members:"
+$nbrofdays = [DateTime]::DaysInMonth($today.Year, $today.Month)  # DaysInMonth is a static member
+$LastDateThisMonth = New-Object Datetime($today.Year, $today.Month,$nbrofdays)
+
+$LastDateThisMonth
+write-host $LastDateThisMonth
+write-host "$LastDateThisMonth"
+write-host ""
+
+
+
+
 
 
 # -Format outputs other data types
+
+write-host -ForegroundColor Cyan "Format returns other data types:"
 $thisyear = get-date -Format yyyy #thisyear is an integer
 $lastyear = $thisyear-1
 $lastyear # this is a integer
+write-host ""
 
 
-#get-date | gm # gm is alias for Get-Member
 
+
+# Offset methods
+
+write-host -ForegroundColor Cyan "Offset methods like AddYears(-1) is useful:"
 
 $NextYear = (get-date).AddYears(1)
-
 $NextYear # This a a datetime
-
 $NextYear.Year #this outputs an integer
-
-#get-date kan have a variable as parameter. 
-#get-date $adate -format yyyy
+write-host ""
 
 
+
+# Misc
+# ======
+# get-date | gm # gm is alias for Get-Member
+# Get-Date | gm -static  # -static is only listing static members
 
 
 
