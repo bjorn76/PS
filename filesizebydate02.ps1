@@ -35,7 +35,7 @@ Function Get-fileSizeByCreationYear
   
   $Start =Get-date $oldestdate -Month 1 -Day 1
   $Period = $Start.AddYears(1)
-  $Period = $Start.AddDays(-1)
+  $Period = $Period.AddDays(-1)
   $End = [System.DateTime]::Today
 
 
@@ -43,7 +43,7 @@ Function Get-fileSizeByCreationYear
   $iEnd = $End.Year
 
   
-  Write-Host "Start: $iStart End: $iEnd #Debug
+  Write-Host "Start: $iStart End: $iEnd" #Debug
 
   	
  
@@ -55,11 +55,12 @@ Function Get-fileSizeByCreationYear
     $datestring = "...files from " + (get-date $Start -format yyyy-MM-dd) + (" to ") + (get-date $Period -format yyyy-MM-dd) + " is: " 
     write-host -NoNewline -ForegroundColor white  $datestring
   
-   $filesInDateRange = $AllFiles |  Where-Object {($_.CreationTime -le $Period) -and ($_.CreationTime -gt $Start)}
+   #$filesInDateRange = $AllFiles |  Where-Object {($_.CreationTime -le $Period) -and ($_.CreationTime -gt $Start)}
+   $filesInDateRange = $AllFiles |  Where-Object {($_.LastWriteTime -le $Period) -and ($_.LastWriteTime -gt $Start)}
    $size = "{0:N2} GB" -f (($filesInDateRange | measure Length -s).Sum /1GB)
    Write-Host  $size
 
-   write-host $size
+   
 
    $Start=$Start.AddYears(1)
    $Period = $Period.AddYears(1)
@@ -86,7 +87,8 @@ Write-Host -ForegroundColor White "Size of..."
 #$file = Get-F 'c:\users\bjorn'
 #$file = 'c:\users\bjorn' # Skip dialog when debugging
 $file = 'X:\BjornJ' # Skip dialog when debugging
-#$file = '\\DS415\Media2' # Skip dialog when debugging
+#$file = 'N:\TCRES\XP_8900' # Skip dialog when debugging
+
 
 
 Get-fileSizeByCreationYear -path $file
