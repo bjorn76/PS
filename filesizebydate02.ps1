@@ -49,7 +49,7 @@ Function Get-fileSizeByCreationYear
  
   #for ($i=$j; $i -lt $iEnd; $i++)
 
-  for ($i=$iStart; $i -lt $iEnd ; $i++)
+  for ($i=$iStart; $i -le $iEnd ; $i++)
 
   {
     $datestring = "...files from " + (get-date $Start -format yyyy-MM-dd) + (" to ") + (get-date $Period -format yyyy-MM-dd) + " is: " 
@@ -86,8 +86,8 @@ Write-Host -ForegroundColor White "Size of..."
 # Activate dialog
 #$file = Get-F 'c:\users\bjorn'
 #$file = 'c:\users\bjorn' # Skip dialog when debugging
-$file = 'X:\BjornJ' # Skip dialog when debugging
-#$file = 'N:\TCRES\XP_8900' # Skip dialog when debugging
+#$file = 'X:\BjornJ' # Skip dialog when debugging
+$file = 'N:\TCRES\' # Skip dialog when debugging
 
 
 
