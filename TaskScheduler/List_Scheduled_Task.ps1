@@ -10,6 +10,7 @@
 
 
 
+cls
 
 $Found
 $aSchTask
@@ -20,57 +21,50 @@ $FoundInfo2
 #cls
 
 
-Write-Host -nonewline -foregroundcolor cyan "Found: "
-
-
 
 # 1) Start of 1
+
+Write-Host -nonewline -foregroundcolor cyan "Get all Tasks Scheduled: "
 $Found =  Get-ScheduledTask -TaskPath "*"
-
-
-
-
-#$Found | Format-Table
+$Found | Format-Table
 
 
 
 # 2)     Start of 2
-
+Write-Host -nonewline -foregroundcolor cyan "More info on the first 2 Tasks Scheduled: "
 
 $FoundInfo1 = Get-ScheduledTaskInfo -InputObject $Found[1]
 $FoundInfo2 = Get-ScheduledTaskInfo -InputObject $Found[2]
 
 
-$FoundInfo3= $FoundInfo1 #+ $FoundInfo2
+$FoundInfo1 | format-List
+$FoundInfo2 | format-List
 
+# 3)     Start of 3
+Write-Host -nonewline -foregroundcolor cyan "More info on ALL Tasks Scheduled: "
 
 $i = 0
 
-#$Found.Count
-
-
-
-
 foreach ($aSchTask in $Found) {
+  Get-ScheduledTaskInfo -InputObject $aSchTask      
+      
 
-
-#$FoundInfo[$i] = Get-ScheduledTaskInfo -InputObject $aSchTask      
-#@FoundInfo += Get-ScheduledTaskInfo -InputObject $aSchTask  | Select-Object LastRunTime, TaskName, NextRunTime      
-
-$i +=1
+  $i +=1
 
 }
 
+$FoundInfo =  Get-ScheduledTaskInfo -InputObject  $Found[2]
+$FoundInfo | Format-Table
 
 
-$FoundInfo1 |format-table
-$FoundInfo2 |format-List
+$FoundInfo = $FoundInfo1, $FoundInfo2
 
 
-
-
-#$Found | Sort-Object Taskname | Export-Csv -Path c:\temp\ScheduledTask.csv
 
 
 
 # Start of slask lines
+
+
+#@FoundInfo += Get-ScheduledTaskInfo -InputObject $aSchTask  | Select-Object LastRunTime, TaskName, NextRunTime
+#$Found | Sort-Object Taskname | Export-Csv -Path c:\temp\ScheduledTask.csv
